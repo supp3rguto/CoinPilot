@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Socket } from 'ngx-socket-io';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -15,7 +17,9 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     MatCardModule,
     MatTableModule,
     MatProgressSpinnerModule,
-    NgxChartsModule
+    NgxChartsModule,
+    MatSelectModule,
+    MatSlideToggleModule
   ],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']
@@ -28,10 +32,9 @@ export class DashboardComponent implements OnInit {
   public simulationContext: string | null = null;
   public isLoading: boolean = true;
   public displayedColumns: string[] = ['name', 'basePrice', 'currentPrice'];
-
-  public rideChartData: any[] = [
-    { name: 'Viagem Aeroporto -> Hotel', series: [] }
-  ];
+  public chartData: any[] = [];
+  public selectedRouteId: number = 3;
+  public viewAll: boolean = false;
 
   constructor(private http: HttpClient, private socket: Socket) {}
 
@@ -40,6 +43,9 @@ export class DashboardComponent implements OnInit {
       .subscribe(data => {
         this.products = data; 
         this.isLoading = false; 
+        if (!this.products.find(p => p.id === this.selectedRouteId) && this.products.length > 0) {
+          this.selectedRouteId = this.products[0].id;
+        }
         this.updateChartData(data);
       });
 
@@ -53,27 +59,52 @@ export class DashboardComponent implements OnInit {
   }
 
   updateChartData(products: any[]) {
-    const productToPlot = products.find(p => p.id === 3);
-    if (!productToPlot || productToPlot.currentPrice === 0) return;
-
     const timestamp = new Date().toLocaleTimeString();
-    const newPrice = productToPlot.currentPrice;
 
-    const newPoint = { name: timestamp, value: newPrice };
-    const currentSeries = this.rideChartData[0].series;
-    const updatedSeries = [...currentSeries, newPoint];
+    if (this.viewAll) {
+      let newChartData = [...this.chartData];
+      
+      if (newChartData.length === 0) {
+        newChartData = products.map(p => ({ name: p.name, series: [] }));
+      }
 
-    if (updatedSeries.length > 10) {
-      updatedSeries.shift();
+      products.forEach(product => {
+        const series = newChartData.find(s => s.name === product.name);
+        if (series) {
+          const newSeries = [...series.series, { name: timestamp, value: product.currentPrice }];
+          if (newSeries.length > 10) newSeries.shift();
+          series.series = newSeries;
+        }
+      });
+      this.chartData = [...newChartData];
+
+    } else {
+      const product = products.find(p => p.id === this.selectedRouteId);
+      if (!product) return;
+
+      let currentSeries = (this.chartData[0]?.name === product.name) ? this.chartData[0].series : [];
+
+      const newSeries = [...currentSeries, { name: timestamp, value: product.currentPrice }];
+      if (newSeries.length > 10) newSeries.shift();
+      
+      this.chartData = [{ name: product.name, series: newSeries }];
     }
-    
-    this.rideChartData = [
-      { ...this.rideChartData[0], series: updatedSeries }
-    ];
+  }
+
+  onViewAllToggle(event: any) {
+    this.viewAll = event.checked;
+    this.chartData = [];
+    this.updateChartData(this.products);
+  }
+
+  onSelectionChange(event: any) {
+    this.selectedRouteId = event.value;
+    this.chartData = [];
+    this.updateChartData(this.products);
   }
 
   getCardColor(index: number) {
-    const colors = ['#29b6f6', '#66bb6a', '#ffa726'];
+    const colors = ['#29b6f6', '#66bb6a', '#ffa726', '#e57373']; // Adicionei mais uma cor
     return colors[index % colors.length];
   }
 }

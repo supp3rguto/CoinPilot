@@ -4,17 +4,16 @@
     Contexto da Simulação: <strong>{{ simulationContext }}</strong>
   </span>
 </header>
-
 <div class="spinner-container" *ngIf="isLoading">
   <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 </div>
 
 <div class="main-grid" *ngIf="!isLoading">
+
   <mat-card 
     *ngFor="let product of products; let i = index" 
     class="stat-card" 
     [style.border-left-color]="getCardColor(i)">
-    
     <mat-card-header>
       <mat-card-title>{{ product.name }}</mat-card-title>
     </mat-card-header>
@@ -26,19 +25,42 @@
 
   <mat-card class="chart-card">
     <mat-card-content>
-      <h3>Variação de Preço: Viagem Aeroporto -> Hotel</h3>
+      
+      <div class="chart-controls">
+        <h3>Variação de Preço</h3>
+        
+        <div class="controls-wrapper">
+          <mat-slide-toggle
+            [checked]="viewAll"
+            (change)="onViewAllToggle($event)">
+            Ver Todas
+          </mat-slide-toggle>
+          
+          <mat-select 
+            class="route-select"
+            [value]="selectedRouteId" 
+            (selectionChange)="onSelectionChange($event)"
+            [disabled]="viewAll"> <mat-option *ngFor="let product of products" [value]="product.id">
+              {{ product.name }}
+            </mat-option>
+
+          </mat-select>
+        </div>
+      </div>
+      
       <ngx-charts-line-chart
           [view]="[700, 300]"  
           [scheme]="'cool'"
-          [results]="rideChartData"
+          [results]="chartData" 
           [xAxis]="true"
           [yAxis]="true"
-          [showXAxisLabel]="true"
+          [legend]="viewAll" [showXAxisLabel]="true"
           [showYAxisLabel]="true"
           [xAxisLabel]="'Tempo (Simulação)'"
           [yAxisLabel]="'Preço (R$)'"
           [autoScale]="true">
       </ngx-charts-line-chart>
+
     </mat-card-content>
   </mat-card>
 
@@ -67,4 +89,5 @@
       </table>
     </mat-card-content>
   </mat-card>
+
 </div>
