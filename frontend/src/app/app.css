@@ -1,50 +1,16 @@
-.container {
-  max-width: 900px;
-  margin: 20px auto;
-  padding: 0 16px;
-}
-
-.status-card {
-  margin-bottom: 20px;
-  text-align: center;
-  background-color: #f9f9f9;
-}
-
-.spinner-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 50px;
-}
-
-table {
+.app-container {
+  height: 100vh;
   width: 100%;
 }
 
-.price-base {
-  color: #888;
-  text-decoration: line-through;
+.app-sidenav {
+  width: 250px;
 }
 
-.price-current {
-  font-weight: bold;
-  font-size: 1.1em;
-  color: #0056b3; 
-}
-
-.chart-card {
-  margin-top: 20px;
-}
-
-.stat-card .base-price {
-  display: block;
-  font-size: 0.8em;
-  color: #888;
-  margin-top: 5px;
-  text-decoration: line-through;
-}
-
-.table-card .price-base {
-  text-decoration: line-through;
-  color: #888;
+.app-content {
+  padding: 24px 48px;
+  background-color: #f5f7fa;
+  overflow-y: auto; 
+  height: 100vh;
+  box-sizing: border-box;
 }

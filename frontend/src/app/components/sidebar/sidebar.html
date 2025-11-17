@@ -4,20 +4,26 @@
 </div>
 
 <mat-nav-list>
-  <a mat-list-item href="#">
+  <a mat-list-item 
+     routerLink="/dashboard" 
+     routerLinkActive="active-link"
+     [routerLinkActiveOptions]="{exact: true}">
     <mat-icon>dashboard</mat-icon>
     <span>Dashboard</span>
   </a>
-  <a mat-list-item href="#">
+  
+  <a mat-list-item 
+     routerLink="/routes" 
+     routerLinkActive="active-link">
     <mat-icon>map</mat-icon>
     <span>Rotas</span>
   </a>
-  <a mat-list-item href="#">
-    <mat-icon>account_balance_wallet</mat-icon>
+  
+  <a mat-list-item href="#" (click)="false"> <mat-icon>account_balance_wallet</mat-icon>
     <span>Financeiro</span>
   </a>
-  <a mat-list-item href="#">
-    <mat-icon>settings</mat-icon>
+  
+  <a mat-list-item href="#" (click)="false"> <mat-icon>settings</mat-icon>
     <span>Configurações</span>
   </a>
 </mat-nav-list>

@@ -1,0 +1,91 @@
+.content-header {
+  margin-bottom: 24px;
+}
+.content-header h1 {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.routes-layout {
+  display: flex;
+  gap: 24px;
+}
+
+.form-column {
+  flex: 1;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.table-column {
+  flex: 2;
+}
+
+.route-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.route-form mat-form-field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.table-column table {
+  width: 100%;
+}
+
+.mat-icon-button {
+  color: #f44336;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px;
+}
+
+h3 {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.origem-destino-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.origem-destino-wrapper mat-form-field {
+  flex: 1;
+}
+
+.origem-destino-wrapper mat-icon {
+  color: #555;
+  font-size: 24px;
+}
+
+.price-field {
+  margin-top: 10px;
+}
+
+.route-form mat-error {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.route-form label {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(0,0,0,0.6);
+  margin-bottom: 2px;
+}
