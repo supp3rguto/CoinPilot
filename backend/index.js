@@ -14,9 +14,9 @@ app.use(cors());
 app.use(express.json());
 
 let routes = [
-  { id: 1, name: 'Viagem Centro -> Bairro A', basePrice: 20.00, currentPrice: 20.00 },
-  { id: 2, name: 'Viagem Centro -> Bairro B', basePrice: 15.00, currentPrice: 15.00 },
-  { id: 3, name: 'Viagem Aeroporto -> Hotel', basePrice: 50.00, currentPrice: 50.00 }
+  { id: 1, name: 'Centro -> Residencial Victoria', basePrice: 20.00, currentPrice: 20.00 },
+  { id: 2, name: 'Centro -> Jardim Aurora', basePrice: 15.00, currentPrice: 15.00 },
+  { id: 3, name: 'Aeroporto Viracopos -> Hotel', basePrice: 50.00, currentPrice: 50.00 }
 ];
 
 let transactionLedger = []; 
@@ -177,9 +177,13 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('get-settings', () => {
+    socket.emit('settings-changed', settings);
+  });
+
   socket.emit('settings-changed', settings);
 });
 
 server.listen(PORT, () => {
-  console.log(`Servidor CoinPilot (Backend V9) rodando em http://localhost:${PORT}`);
+  console.log(`Servidor CoinPilot rodando em http://localhost:${PORT}`);
 });

@@ -38,6 +38,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.settings = data;
         this.isLoading = false;
       });
+
+      this.socket.emit('get-settings'); 
   }
 
   ngOnDestroy() {

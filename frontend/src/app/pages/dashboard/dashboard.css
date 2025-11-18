@@ -1,3 +1,9 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
 .content-header {
   display: flex;
   justify-content: space-between;
@@ -19,6 +25,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr); 
   gap: 24px;
+  flex-grow: 1;
 }
 
 .main-grid mat-card {
