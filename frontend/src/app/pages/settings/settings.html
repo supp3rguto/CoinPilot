@@ -1,0 +1,53 @@
+<header class="content-header">
+  <h1>Configurações do Simulador</h1>
+</header>
+
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+
+<div class="settings-grid" *ngIf="settings">
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Simulação de Vendas</mat-card-title>
+      <mat-card-subtitle>Pausa o "Loop de Vendas" no backend.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-slide-toggle
+        [checked]="settings.salesSimulation"
+        (change)="onSettingChange('salesSimulation', $event.checked)">
+        {{ settings.salesSimulation ? 'Ativada' : 'Pausada' }}
+      </mat-slide-toggle>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Simulação de Clima</mat-card-title>
+      <mat-card-subtitle>Impede o backend de simular "Chuva".</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-slide-toggle
+        [checked]="settings.weatherSimulation"
+        (change)="onSettingChange('weatherSimulation', $event.checked)">
+        {{ settings.weatherSimulation ? 'Ativada' : 'Desativada' }}
+      </mat-slide-toggle>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Simulação de Eventos</mat-card-title>
+      <mat-card-subtitle>Impede o backend de simular "Eventos na Cidade".</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-slide-toggle
+        [checked]="settings.eventSimulation"
+        (change)="onSettingChange('eventSimulation', $event.checked)">
+        {{ settings.eventSimulation ? 'Ativada' : 'Desativada' }}
+      </mat-slide-toggle>
+    </mat-card-content>
+  </mat-card>
+
+</div>
