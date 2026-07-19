@@ -1,26 +1,27 @@
 {
-  "builds": [
-    {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build"
+  "services": {
+    "frontend": {
+      "root": "frontend",
+      "framework": "angular"
     },
-    {
-      "src": "backend/index.js",
-      "use": "@vercel/node"
+    "backend": {
+      "root": "backend"
     }
-  ],
+  },
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/backend/index.js"
-    },
-    {
-      "source": "/(.*\\..*)",
-      "destination": "/frontend/$1"
+      "source": "/api(/.*)?",
+      "destination": {
+        "type": "service",
+        "service": "backend"
+      }
     },
     {
       "source": "/(.*)",
-      "destination": "/frontend/index.html"
+      "destination": {
+        "type": "service",
+        "service": "frontend"
+      }
     }
   ]
 }
